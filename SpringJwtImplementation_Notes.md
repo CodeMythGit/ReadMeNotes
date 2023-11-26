@@ -1,6 +1,6 @@
 # JWT Authentication using Spring Boot Notes
 
-## Step To Followed 
+## Step To Be Followed 
 
 > 1. Create Basic Rest API that will return the list of Details like Employee,Student or any other.
 > 2. Secure the Rest API by adding security dependecy
