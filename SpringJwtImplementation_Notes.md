@@ -152,3 +152,156 @@ In doFilterInternal method we are going to implement below logic:
 > 4. Get Username from token
 > 5. Load Associated with this token
 > 6. Set Authentication **SecurityContextHolder**
+
+```java
+@Component
+@Slf4j
+@AllArgsConstructor
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+    private JwtHelper jwtHelper;
+
+
+    private UserDetailsService userDetailsService;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        // Bearer
+        String requestHeader = request.getHeader("Authorization");
+        log.info("Header :  {}", requestHeader);
+        String username = null;
+        String token = null;
+        if (requestHeader != null && requestHeader.startsWith("Bearer")) {
+            //looking good
+            token = requestHeader.substring(7);
+            try {
+                username = this.jwtHelper.getUsernameFromToken(token);
+            } catch (IllegalArgumentException e) {
+                logger.info("Illegal Argument while fetching the username !!");
+                e.printStackTrace();
+            } catch (ExpiredJwtException e) {
+                logger.info("Given jwt token is expired !!");
+                e.printStackTrace();
+            } catch (MalformedJwtException e) {
+                logger.info("Some changed has done in token !! Invalid Token");
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            logger.info("Invalid Header Value !! ");
+        }
+
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            //fetch user detail from username
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            Boolean validateToken = this.jwtHelper.validateToken(token, userDetails);
+            if (validateToken) {
+                //set the authentication
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                logger.info("Validation fails !!");
+            }
+        }
+        filterChain.doFilter(request, response);
+    }
+}
+```
+
+## Create a class SecurityFilterConfig
+In this class we are going to create a bean of SecurityFilterChain to define the request processing logic
+
+```java
+@Configuration
+@AllArgsConstructor
+public class SecurityFilterConfig {
+    private JwtAuthenticationEntryPoint point;
+    private JwtAuthenticationFilter filter;
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/test").authenticated()
+                        .requestMatchers("/authenticate").permitAll()
+                        .anyRequest()
+                        .authenticated())
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
+    }
+}
+```
+
+## Create a class JwtRequest
+This class will be use to pass a request body and based on that we will get the response.
+```java
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class JwtRequest {
+
+    private String username;
+    private String password;
+}
+```
+
+## Create a class JwtResponse
+This class will be response body of the jwt request
+```java
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class JwtResponse {
+    private String jwtToken;
+    private String username;
+}
+```
+
+## Create a class JwtAuthenticationController 
+Expose a POST API /authenticate using the JwtAuthenticationController. The POST API gets username and password in the body- Using Spring Authentication Manager we authenticate the username and password.If the credentials are valid, a JWT token is created using the JWTTokenUtil and provided to the client.
+
+```java
+@RestController
+@AllArgsConstructor
+@Slf4j
+public class JwtAuthenticationController {
+
+    private UserDetailsService userDetailsService;
+
+    private AuthenticationManager manager;
+
+    private JwtHelper helper;
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
+
+        this.doAuthenticate(request.getUsername(), request.getPassword());
+
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+        String token = this.helper.generateToken(userDetails);
+
+        JwtResponse response = JwtResponse.builder()
+                .jwtToken(token)
+                .username(userDetails.getUsername()).build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    private void doAuthenticate(String email, String password) {
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
+        try {
+            manager.authenticate(authentication);
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException("Credentials Invalid !!");
+        }
+
+    }
+}
+```
