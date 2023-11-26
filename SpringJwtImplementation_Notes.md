@@ -68,7 +68,7 @@
 
 ## Create Class JwtAuthenticationEntryPoint and implements AuthenticationEntryPoint
 
-Method of this class is called whenever as exception is thrown due to unauthenticated user trying to access the resource that required authentication.
+Method of this class is called whenever an exception is thrown due to unauthenticated user trying to access the resource that required authentication.
 
 ```java
 @Component
