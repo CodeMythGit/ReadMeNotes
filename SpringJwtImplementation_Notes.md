@@ -161,7 +161,7 @@ public class JwtHelper {
 In doFilterInternal method we are going to implement below logic:
 > 1. Get header from the request based on key Authorization
 > 2. Get Token from the header
-> 3. Valdiate token
+> 3. Validate token
 > 4. Get Username from token
 > 5. Load Associated with this token
 > 6. Set Authentication **SecurityContextHolder**
