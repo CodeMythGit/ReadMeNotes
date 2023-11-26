@@ -86,7 +86,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
 ## Create JwtHelper Class
 
-This class is used to perform action like validateToken and generateToken etc.
+This class is used to perform action like **validateToken** and **generateToken** etc.
 ```java
 @Component
 public class JwtHelper {
