@@ -68,6 +68,8 @@
 > [!WARNING]  
 > Before going forward with the implementation of JWT Authentication load all the jwt dependency
 
+https://jwt.io/#debugger
+
 ## Create Class JwtAuthenticationEntryPoint and implements AuthenticationEntryPoint
 
 Method of this class is called whenever an exception is thrown due to unauthenticated user trying to access the resource that required authentication.
