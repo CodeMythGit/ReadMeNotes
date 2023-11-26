@@ -62,6 +62,9 @@
             <scope>runtime</scope>
         </dependency>
 
+## JWT Authentication Work Flow
+![image](https://github.com/CodeMythGit/ReadMeNotes/assets/90126232/16a3904a-0445-4f41-a083-722fc953d6f1)
+
 
 ## Create Class JwtAuthenticationEntryPoint and implements AuthenticationEntryPoint
 
