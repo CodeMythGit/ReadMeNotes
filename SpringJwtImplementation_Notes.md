@@ -65,6 +65,8 @@
 ## JWT Authentication Work Flow
 ![image](https://github.com/CodeMythGit/ReadMeNotes/assets/90126232/16a3904a-0445-4f41-a083-722fc953d6f1)
 
+> [!WARNING]  
+> Before going forward with the implementation of JWT Authentication load all the jwt dependency
 
 ## Create Class JwtAuthenticationEntryPoint and implements AuthenticationEntryPoint
 
