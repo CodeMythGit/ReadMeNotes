@@ -38,10 +38,6 @@
             <optional>true</optional>
         </dependency>
 
-# Flow Diagram 
-
-![Screenshot 2023-12-03 220452](https://github.com/CodeMythGit/ReadMeNotes/assets/90126232/5be13fff-63d8-4a5d-9ea4-97d15be51d2e)
-
 
 # Code
 ## Create index.html
