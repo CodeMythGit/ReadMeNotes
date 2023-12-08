@@ -1,5 +1,7 @@
 # Learn Exception Handling using Realtime project
 
+> [!IMPORTANT]
+> 📌 🔥We are going to learn the concept of **Thymeleaf, Model, Controller, Exception handling, @Valid, @ModelAttribute, @RequestParam, RedirectAttributes and Binding**. 🚀🚀
 
 ## Design Overview
 
@@ -8,6 +10,18 @@
 ## Important method to be implemented.
 
 ![image](https://github.com/CodeMythGit/ReadMeNotes/assets/90126232/3d8edebf-e0e7-496f-80be-d90c4a7cc552)
+
+## Step to be followed
+
+
+
+> 1. Create a **model,repository and controller** package
+> 2. Create **index.html** page
+> 3. Create a **GET** method which will direct to index page
+> 4. Create POST method to save the details to database without validation
+> 5. Now implement the validation on the form by using valdiation concept
+> 6. Create **EDIT** and **DELETE** method to edit and delete the record from the database respectively.
+> 7. Test all the method at last once again
 
 ## Project Structure
 
