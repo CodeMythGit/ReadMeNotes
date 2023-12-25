@@ -39,3 +39,50 @@ To avoid the ‘Fat Controller’ anti-pattern, adhere to the following principl
 * **Delegating**: Your controllers should be delegating, meaning it should not execute business logic, but rely on delegation.
 * **Encapsulated**: The HTTP layer of your application should be handled by controllers, this should not be handled by the service layer.
 * **Use-case-centric**: make sure your controllers are built around use cases or the business domain.
+
+## [4. Handle Exception Globally](url)
+
+* To handle exceptions globally, you need to create a class and annotate this class with this annotation **@ControllerAdvice (Web MVC projects)** or **@RestControllerAdvice (Web API projects)**.
+
+* **@ControllerAdvice** is designed for Spring Boot MVC applications, it is an annotation that when applied to a class, transforms it into a global controller advisor, in turn, influences the behavior of multiple controllers.
+
+> [!NOTE]
+> Lets Understand with Example in IDE
+
+## [5. Make Use Of Lazy Initialization](url)
+
+* The SpringApplication allows you as a developer to initialize your spring boot application lazily. **When lazy initialization is enabled, beans get created as they are needed** rather than during application startup. Enabling lazy initialization reduces the time that it takes your application to start.
+
+* Lazy initialization results in many web-related beans not being initialized until an HTTP request is received.
+
+* The downside of lazy initialization is that it delays the discovery of a problem with the application. If you lazily initialize a misconfigured bean, the failure of that bean will not occur during startup and the problem will only show up when the bean is initialized.
+
+You need to ensure that the JVM has sufficient memory to accommodate all of the application’s beans and not just those that are initialized during startup. You need to fine-tune the JVM’s heap size before you enable lazy initialization.
+
+Lazy initialization can be enabled programmatically using:
+
+>1. lazyInitialization method on SpringApplicationBuilder
+>2. setLazyInitialization method on SpringApplication
+>3. spring.main.lazy-initialization property
+
+## [6. Take Observability Seriously](url)
+
+* Observability is basically the process of measuring the internal state of your application using its external outputs such as logs, metrics and traces.
+
+Actuator Endpoints dependency :
+
+  ![image](https://github.com/CodeMythGit/ReadMeNotes/assets/90126232/5df01154-e3a2-42ca-8d7e-2f45c8e47f1c)
+
+* One thing you need to know is that, Actuator comes with most of its endpoints disabled, **leaving just two endpoints enabled /health and /info**
+* **To enable all endpoints**, go to your **application.properties** or **application.yml** file and add the following
+  
+![image](https://github.com/CodeMythGit/ReadMeNotes/assets/90126232/80951e03-3abe-4775-a048-3fa0ff2e842b)
+
+### Some interesting Actuator Endpoints
+  * **/health**: This endpoint shows you the **basic health information of your application**. It is one of the most commonly used endpoints and is exposed by default.
+  * **/info**: This endpoint will **show you the application information**. This is useful when you want to expose details like the application name, version, and any custom properties.
+  * **/beans**: This endpoint shows you a comprehensive **list of all the Spring beans in your application**.
+  * **/loggers**: This endpoint shows you the **configuration of loggers** in the application.
+  * **/env**: This endpoint shows the **properties defined in the environment of your application**. These properties can include system properties, environment variables, and properties from application.properties or application.yml.
+  * **/mappings**: This endpoint shows a **list of all @RequestMapping paths** in your application.
+  * **/configprops**: This endpoint displays a **list of collated @ConfigurationProperties**
