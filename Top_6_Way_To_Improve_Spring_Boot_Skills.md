@@ -1,4 +1,4 @@
-# 8 WAYS TO IMPROVE YOUR SPRING BOOT SKILLS
+# 7 WAYS TO IMPROVE YOUR SPRING BOOT SKILLS
 
 Below are the points that we are going to discuss:
 1. Good Understanding of Starter POM(Project Object Model
