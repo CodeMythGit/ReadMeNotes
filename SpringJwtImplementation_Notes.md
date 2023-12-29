@@ -316,3 +316,17 @@ public class JwtAuthenticationController {
     }
 }
 ```
+
+## How to do testing
+1. **Create a token using username and password as below (Method type should be : POST)**
+![image](https://github.com/CodeMythGit/ReadMeNotes/assets/90126232/b0d34f40-313b-4303-92c5-fb5c00032454)
+
+
+2. **Use the token generated in above step 1 for accessing the endpoint: (localhost:8080/welcome/employees, Method Type : GET)**
+* Use the token in following manner and hit the endpoint
+![image](https://github.com/CodeMythGit/ReadMeNotes/assets/90126232/1baab147-e936-4fca-9d91-2307123a0ece)
+
+
+
+
+
