@@ -8,7 +8,7 @@
 * Predefined Endpoints
 * We will learn this concept with coding practice
 
-## 1 : What is Actuator
+## 1 : Important Dependencies
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
