@@ -1,4 +1,4 @@
-# Understanding Spring Boot Actutor with Code Example (Most asked Skills by IT company)
+# Understanding Spring Boot Actuator with Code Example (Most asked Skills by IT company)
 
 ## Step  to implement
 
